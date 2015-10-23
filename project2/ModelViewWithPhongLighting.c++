@@ -18,6 +18,9 @@ GLint ModelViewWithPhongLighting::pvaLoc_mcNormal = -2;
 GLint ModelViewWithPhongLighting::ppuLoc_kd = -2;
 GLint ModelViewWithPhongLighting::ppuLoc_mc_ec = -2;
 GLint ModelViewWithPhongLighting::ppuLoc_ec_lds = -2;
+GLint ModelViewWithPhongLighting::ppuLoc_lightStrength = -2;
+GLint ModelViewWithPhongLighting::ppuLoc_globalAmbient = -2;
+GLint ModelViewWithPhongLighting::ppuLoc_ka = -2;
 
 std::string ModelViewWithPhongLighting::vShaderSource = "simple3d.vsh";
 std::string ModelViewWithPhongLighting::fShaderSource = "simple3d.fsh";
@@ -53,6 +56,9 @@ void ModelViewWithPhongLighting::fetchGLSLVariableLocations()
 		ppuLoc_kd = ppUniformLocation(shaderProgram, "kd");
 		ppuLoc_mc_ec = ppUniformLocation(shaderProgram, "mc_ec");
 		ppuLoc_ec_lds = ppUniformLocation(shaderProgram, "ec_lds");
+		ppuLoc_ka = ppUniformLocation(shaderProgram, "ka");
+		ppuLoc_lightStrength = ppUniformLocation(shaderProgram, "lightStrength");
+		ppuLoc_globalAmbient = ppUniformLocation(shaderProgram, "globalAmbient");
 	}
 }
 

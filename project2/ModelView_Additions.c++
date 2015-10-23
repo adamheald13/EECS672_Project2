@@ -17,7 +17,7 @@ void ModelView::addToGlobalZoom(double increment)
 
 void ModelView::getMatrices(cryph::Matrix4x4& mc_ec, cryph::Matrix4x4& ec_lds)
 {
-	std::cout << "You must implement ModelView::getMatrices in ModelView_Additions.c++\n";
+	//std::cout << "You must implement ModelView::getMatrices in ModelView_Additions.c++\n";
 	// TODO:
 	// 1. Create the mc_ec matrix:
 	//    Create a local variable of type Matria4x4 calledx M_ECu from the eye,
@@ -25,6 +25,7 @@ void ModelView::getMatrices(cryph::Matrix4x4& mc_ec, cryph::Matrix4x4& ec_lds)
 	//    and are stored in protected class variables that you directly access
 	//    (ModelView::eye, ModelView::center, and ModelView::up). You can use the
 	//    following utility from Matrix4x4:
+	cryph::Matrix4x4 M_ECu = cryph::Matrix4x4::lookAt(ModelView::eye, ModelView::center, ModelView::up);
 	//
 	//    cryph::Matrix4x4 cryph::Matrix4x4::lookAt(
 	//          const cryph::AffPoint& eye, const cryph::AffPoint& center,
@@ -34,13 +35,37 @@ void ModelView::getMatrices(cryph::Matrix4x4& mc_ec, cryph::Matrix4x4& ec_lds)
 	//
 	//    a) For project 2: mc_ec = M_ECu
 	//    b) For project 3: mc_ec = dynamic_view * M_ECu
+	mc_ec = M_ECu;
 	//
 	// 2. Create the ec_lds matrix:
 	//    Use the mcRegionOfInterest (again, set in main; accessible to you via
 	//    the protected ModelView class variable ModelView::mcRegionOfInterest) to
 	//    determine the radius of the circumscribing sphere. Recall that this radius
 	//    is used to determine an initial ecXmin, ecXmax, ecYmin, and ecYmax.
+	double xmin = mcRegionOfInterest[0];
+	double xmax = mcRegionOfInterest[1];
+	double ymin = mcRegionOfInterest[2];
+	double ymax = mcRegionOfInterest[3];
+	double zmin = mcRegionOfInterest[4];
+	double zmax = mcRegionOfInterest[5];
+
+	//		find radius of circumscribing sphere
+	double xDistance = xmax - xmin;
+	double yDistance = ymax - ymin;
+	double zDistance = zmax - zmin;
+	double diameter = sqrt(xDistance * xDistance +
+											   yDistance * yDistance +
+										 	   zDistance * zDistance);
+	double radius = diameter / 2;
+
+	double ecXmin = - radius;
+	double ecXmax = radius;
+	double ecYmin = - radius;
+	double ecYmax = radius;
+
 	//      i) Adjust the width in the x OR y direction to match the viewport aspect ratio;
+	double vAR = Controller::getCurrentController()->getViewportAspectRatio();
+	matchAspectRatio(ecXmin, ecXmax, ecYmin, ecYmax, vAR);
 	//     ii) Project 3 and 4 only: Scale both widths by dynamic_zoom;
 	//    iii) Use the adjusted widths along with the ecZmin, ecZmax, and ecZpp set
 	//         in main and stored in the ModelView class variables to create the
@@ -69,6 +94,8 @@ void ModelView::getMatrices(cryph::Matrix4x4& mc_ec, cryph::Matrix4x4& ec_lds)
 		const cryph::AffVector& projDir);
 
 	*/
+
+	ec_lds = cryph::Matrix4x4::perspective(ecZpp, ecXmin, ecXmax, ecYmin, ecYmax, ecZmin, ecZmax);
 
 	// THEN IN THE CALLER OF THIS METHOD:
 	//

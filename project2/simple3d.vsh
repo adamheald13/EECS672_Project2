@@ -23,16 +23,19 @@ uniform mat4 ec_lds = // (W-V map) * (projection matrix)
 	     0.0, 1.0, 0.0, 0.0, // ==> ORTHOGONAL projection -AND- EC = LDS
 	     0.0, 0.0, -1.0, 0.0,
 	     0.0, 0.0, 0.0, 1.0);
-             
+
 // There are MANY ways to deal with the basic object color.
 // For now we will  simply assume:
 uniform vec3 kd = // "kd" - diffuse reflectivity; basic object color
 	vec3(0.8, 0.0, 0.0); // default: darkish red
+uniform vec3 ka;
 
 // There are also MANY ways to deal with light sources (number, type,
 // strength, etc.).  For now we simply assume one directional source.
 // You will generalize this in future projects.
 uniform vec4 p_ecLightSource = vec4(0.7, 0.2, 1.0, 0.0);
+uniform float lightStrength[] = {0.4, 0.4, 0.4};
+uniform float globalAmbient[] = {0.15, 0.15, 0.15};
 
 // Per-vertex attributes
 // 1. incoming vertex position in model coordinates
