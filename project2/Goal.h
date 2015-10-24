@@ -1,28 +1,26 @@
 // TEMPLATE_Subclass.h
 
-#ifndef COURT_H
-#define COURT_H
+#ifndef GOAL_H
+#define GOAL_H
 
 #include "ModelViewWithPhongLighting.h"
-#include <vector>
 
-class Court : public ModelViewWithPhongLighting
+class Goal : public ModelViewWithPhongLighting
 {
 public:
-	Court();
-	virtual ~Court();
+	Goal(bool isNear);
+	virtual ~Goal();
 
 	// xyzLimits: {mcXmin, mcXmax, mcYmin, mcYmax, mcZmin, mcZmax}
 	void getMCBoundingBox(double* xyzLimitsF) const;
 	void render();
 private:
-	float xmin, xmax, ymin, ymax, zmin, zmax;
-
-	void setMinsMaxes(float cx, float cy, float cz, float lx, float ly, float lz);
-
+	bool isNear;
 	void create();
+	float xModifier;
+	float innerSquareModifier;
+	float outerSquareModifier;
 	std::vector<ModelView*> models;
-
 };
 
 #endif

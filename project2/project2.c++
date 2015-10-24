@@ -3,6 +3,9 @@
 #include "GLFWController.h"
 #include "MandM.h"
 #include "Block.h"
+#include "Court.h"
+#include "Goal.h"
+#include "Cylinder.h"
 
 void set3DViewingInformation(double xyz[6])
 {
@@ -17,7 +20,7 @@ void set3DViewingInformation(double xyz[6])
 	double xmid = 0.5 * (xyz[0] + xyz[1]);
 	double ymid = 0.5 * (xyz[2] + xyz[3]);
 	double zmid = 0.5 * (xyz[4] + xyz[5]);
-	cryph::AffPoint center(23, 7.62, .1);
+	cryph::AffPoint center(15.5, 7.62, 2.5);
 
 	// 2:
 	double maxDelta = xyz[1] - xyz[0];
@@ -29,7 +32,7 @@ void set3DViewingInformation(double xyz[6])
 		maxDelta = delta;
 
 	double distEyeCenter = 2.0 * maxDelta;
-	cryph::AffPoint eye(45, 0, 15);
+	cryph::AffPoint eye(30, -30, 15);
 
 	// 3:
 	cryph::AffVector up(0, 0, 1);
@@ -57,15 +60,26 @@ int main(int argc, char* argv[])
 
 	// create your scene, adding things to the Controller....
 
-	float courtColor[] = { 230.0 / 255.0, 183.0 / 255.0, 55.0 / 255.0 };
-	Block* court = new Block(0, 0, 0, 28.65, 15.24, .01, courtColor);
+	// float courtColor[] = { 230.0 / 255.0, 183.0 / 255.0, 55.0 / 255.0 };
+	// Block* court = new Block(0, 0, 0, 28.65, 15.24, .01, courtColor);
+	// c.addModel(court);
+	//
+	// float black[] = {0, 0, 0};
+	// Block* centerLine = new Block(14.325, 0, 0.01, .0508, 15.24, .01, black);
+	// c.addModel(centerLine);
+
+	Court* court = new Court();
 	c.addModel(court);
 
-	float black[] = {0, 0, 0};
-	Block* centerLine = new Block(14.325, 0, 0.01, .0508, 15.24, .01, black);
-	c.addModel(centerLine);
+	Goal* nearGoal = new Goal(true);
+	c.addModel(nearGoal);
 
-	glClearColor(1.0, 1.0, 1.0, 1.0);
+	Goal* farGoal = new Goal(false);
+	c.addModel(farGoal);
+
+
+
+	glClearColor(.7, .7, .7, 1.0);
 
 	double xyz[6];
 	c.getOverallMCBoundingBox(xyz);

@@ -1,28 +1,29 @@
 // TEMPLATE_Subclass.h
 
-#ifndef COURT_H
-#define COURT_H
+#ifndef SUPPORT_H
+#define SUPPORT_H
 
 #include "ModelViewWithPhongLighting.h"
-#include <vector>
 
-class Court : public ModelViewWithPhongLighting
+class Support : public ModelViewWithPhongLighting
 {
 public:
-	Court();
-	virtual ~Court();
+	Support(bool isNear);
+	virtual ~Support();
 
 	// xyzLimits: {mcXmin, mcXmax, mcYmin, mcYmax, mcZmin, mcZmax}
 	void getMCBoundingBox(double* xyzLimitsF) const;
 	void render();
 private:
-	float xmin, xmax, ymin, ymax, zmin, zmax;
-
-	void setMinsMaxes(float cx, float cy, float cz, float lx, float ly, float lz);
-
 	void create();
 	std::vector<ModelView*> models;
-
+	float cylinderAngle;
+	float cylinderX;
+	float cylinderY;
+	float cylinderZ;
+	float radius;
+	float horizModifier;
+	float dAngle;
 };
 
 #endif
