@@ -47,15 +47,6 @@ void Cylinder::defineCylinder()
 	// EXERCISE: Create/fill VAOs and VBOs here.
 	//           Also use glVertexAttribPointer and glEnableVertexAttribArray
 	// ************************************************************************
-	glGenVertexArrays(1, vao);
-	glBindVertexArray(vao[0]);
-
-	glGenBuffers(1, vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
-	glBufferData(GL_ARRAY_BUFFER, N_POINTS_AROUND_SLICE*sizeof(vec3), coords, GL_STATIC_DRAW);
-	glVertexAttribPointer(pvaLoc_mcPosition, 3, GL_FLOAT, GL_FALSE, 0, 0);
-	glEnableVertexAttribArray(pvaLoc_mcPosition);
-
 	std::cout << "Cylinder::defineCylinder: create/fill VBOs. You will see errors until you do so.\n";
 
 	delete [] coords;

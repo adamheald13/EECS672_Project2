@@ -51,22 +51,16 @@ void ModelView::getMatrices(cryph::Matrix4x4& mc_ec, cryph::Matrix4x4& ec_lds)
 	double zmax = mcRegionOfInterest[5];
 
 	//		find radius of circumscribing sphere
-	double xDistance = xmax - xmin;
-	double yDistance = ymax - ymin;
-	double zDistance = zmax - zmin;
-	double diameter = sqrt(xDistance * xDistance +
-											   yDistance * yDistance +
-										 	   zDistance * zDistance);
-	double radius = diameter / 2;
-
-	double ecXmin = - radius;
-	double ecXmax = radius;
-	double ecYmin = - radius;
-	double ecYmax = radius;
+	xDistance = xmax - xmin;
+	yDistance = ymax - ymin;
+	zDistance = zmax - zmin;
+	double radius = sqrt(xDistance * xDistance +
+											 yDistance * yDistance +
+										 	 zDistance * zDistance);
 
 	//      i) Adjust the width in the x OR y direction to match the viewport aspect ratio;
 	double vAR = Controller::getCurrentController()->getViewportAspectRatio();
-	matchAspectRatio(ecXmin, ecXmax, ecYmin, ecYmax, vAR);
+	matchAspectRatio(xmin, xmax, ymin, ymax, vAR);
 	//     ii) Project 3 and 4 only: Scale both widths by dynamic_zoom;
 	//    iii) Use the adjusted widths along with the ecZmin, ecZmax, and ecZpp set
 	//         in main and stored in the ModelView class variables to create the
