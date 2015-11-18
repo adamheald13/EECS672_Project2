@@ -1,7 +1,6 @@
 // Extracted from: ModelView.c++ - an Abstract Base Class for a combined Model and View for OpenGL
 
 #include "ModelView.h"
-#include <math.h>
 
 void ModelView::addToGlobalRotationDegrees(double rx, double ry, double rz)
 {
